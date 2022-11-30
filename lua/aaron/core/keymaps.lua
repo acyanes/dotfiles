@@ -7,6 +7,7 @@ local keymap = vim.keymap
 
 -- use jk to exit insert mode 
 keymap.set("i", "jk", "<ESC>")
+keymap.set("i", "jj", "<ESC>:update<CR>")
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
