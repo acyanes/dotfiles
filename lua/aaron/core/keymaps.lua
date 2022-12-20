@@ -4,20 +4,19 @@ local keymap = vim.keymap
 
 -- general keymap
 
-
--- use jk to exit insert mode 
+-- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
 keymap.set("i", "jj", "<ESC>:update<CR>")
+
+-- move blocks of code visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
 
 --delete single character without copying into register
 keymap.set("n", "x", '"_x')
-
---increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>") -- increment number
-keymap.set("n", "<leader>-", "<C-x>") -- decrement number
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
