@@ -31,8 +31,7 @@ return packer.startup(function(use)
 
 	-- lua functions that many plugins use
 	use("nvim-lua/plenary.nvim")
-
-	use("EdenEast/nightfox.nvim")
+	use("rebelot/kanagawa.nvim")
 
 	-- tmux & split window navigation
 	use("christoomey/vim-tmux-navigator")
