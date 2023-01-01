@@ -98,6 +98,7 @@ return packer.startup(function(use)
 
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
+	use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 
 	if packer_bootstrap then

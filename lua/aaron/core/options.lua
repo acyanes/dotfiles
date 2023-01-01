@@ -13,7 +13,7 @@ opt.autoindent = true
 -- line wrapping
 opt.wrap = false
 
--- search settings 
+-- search settings
 opt.ignorecase = true
 opt.smartcase = true
 
@@ -34,6 +34,3 @@ opt.splitbelow = true
 
 -- this lets me dw on words with a dash ex. hello-hello
 opt.iskeyword:append("-")
-
-
-
