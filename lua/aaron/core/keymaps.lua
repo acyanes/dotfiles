@@ -9,11 +9,14 @@ keymap.set("i", "jk", "<ESC>")
 keymap.set("i", "jj", "<ESC>:update<CR>")
 
 -- move blocks of code visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
+
+-- delete line without copying to register
+keymap.set("n", "<leader>dd", '"_dd')
 
 --delete single character without copying into register
 keymap.set("n", "x", '"_x')
