@@ -84,6 +84,7 @@ typescript.setup({
 	server = {
 		capabilities = capabilities,
 		on_attach = on_attach,
+		filetypes = { "typescript", "typescriptreact", "typescriptreact" },
 	},
 })
 

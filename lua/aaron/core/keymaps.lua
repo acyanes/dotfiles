@@ -18,6 +18,9 @@ keymap.set("n", "<leader>nh", ":nohl<CR>")
 -- delete line without copying to register
 keymap.set("n", "<leader>dd", '"_dd')
 
+-- delete word without copying to register
+keymap.set("n", "<leader>dw", '"_dw')
+
 --delete single character without copying into register
 keymap.set("n", "x", '"_x')
 
@@ -51,3 +54,5 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available 
 -- diff-view
 keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<CR>")
 keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<CR>")
+
+-- harpoon
