@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/ReplaceWithRegister",
     url = "https://github.com/vim-scripts/ReplaceWithRegister"
   },
+  catppuccin = {
+    loaded = true,
+    path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -124,11 +129,6 @@ _G.packer_plugins = {
     path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
-  ["kanagawa.nvim"] = {
-    loaded = true,
-    path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
-    url = "https://github.com/rebelot/kanagawa.nvim"
-  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
@@ -158,6 +158,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
+  },
+  ["neodev.nvim"] = {
+    loaded = true,
+    path = "/Users/aaron/.local/share/nvim/site/pack/packer/start/neodev.nvim",
+    url = "https://github.com/folke/neodev.nvim"
   },
   neogit = {
     loaded = true,
