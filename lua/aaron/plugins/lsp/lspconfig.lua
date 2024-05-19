@@ -121,6 +121,7 @@ local servers = {
 	"cssls",
 	"tailwindcss",
 	"vuels",
+	"pyright",
 }
 
 for _, server in ipairs(servers) do
