@@ -5,13 +5,14 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
       { "folke/neodev.nvim", opts = {} },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+      },
     },
     config = function()
       -- import lspconfig plugin
       local lspconfig = require("lspconfig")
-  
-      -- import mason_lspconfig plugin
-      local mason_lspconfig = require("mason-lspconfig")
   
       -- import cmp-nvim-lsp plugin
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -71,67 +72,96 @@ return {
       local capabilities = cmp_nvim_lsp.default_capabilities()
   
       -- Change the Diagnostic symbols in the sign column (gutter)
-      -- (not in youtube nvim video)
-      local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      -- Using the new vim.diagnostic.config() API (replaces deprecated sign_define)
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = "󰠠 ",
+            [vim.diagnostic.severity.INFO] = " ",
+          },
+        },
+      })
+
+      -- Configure LSP servers using the new mason-lspconfig 2.0 API
+      -- List of servers from mason.lua (matching ensure_installed)
+      local servers = {
+        "gopls",
+        "terraformls",
+        "zls",
+        "ts_ls",
+        "html",
+        "cssls",
+        "tailwindcss",
+        "lua_ls",
+        "emmet_ls",
+        "pyright",
+      }
+
+      -- Default configuration for servers without custom config
+      local default_config = {
+        capabilities = capabilities,
+      }
+
+      -- Configure each server
+      for _, server_name in ipairs(servers) do
+        -- Skip servers that have custom configurations below
+        if server_name ~= "emmet_ls" and server_name ~= "lua_ls" then
+          if lspconfig[server_name] then
+            lspconfig[server_name].setup(default_config)
+          end
+        end
       end
-  
-      mason_lspconfig.setup_handlers({
-        -- default handler for installed servers
-        function(server_name)
-          lspconfig[server_name].setup({
-            capabilities = capabilities,
-          })
-        end,
-        ["svelte"] = function()
-          -- configure svelte server
-          lspconfig["svelte"].setup({
-            capabilities = capabilities,
-            on_attach = function(client, bufnr)
-              vim.api.nvim_create_autocmd("BufWritePost", {
-                pattern = { "*.js", "*.ts" },
-                callback = function(ctx)
-                  -- Here use ctx.match instead of ctx.file
-                  client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-                end,
-              })
-            end,
-          })
-        end,
-        ["graphql"] = function()
-          -- configure graphql language server
-          lspconfig["graphql"].setup({
-            capabilities = capabilities,
-            filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-          })
-        end,
-        ["emmet_ls"] = function()
-          -- configure emmet language server
-          lspconfig["emmet_ls"].setup({
-            capabilities = capabilities,
-            filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-          })
-        end,
-        ["lua_ls"] = function()
-          -- configure lua server (with special settings)
-          lspconfig["lua_ls"].setup({
-            capabilities = capabilities,
-            settings = {
-              Lua = {
-                -- make the language server recognize "vim" global
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                completion = {
-                  callSnippet = "Replace",
-                },
+
+      -- Custom server configurations
+      if lspconfig["emmet_ls"] then
+        lspconfig["emmet_ls"].setup({
+          capabilities = capabilities,
+          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+        })
+      end
+
+      if lspconfig["lua_ls"] then
+        lspconfig["lua_ls"].setup({
+          capabilities = capabilities,
+          settings = {
+            Lua = {
+              -- make the language server recognize "vim" global
+              diagnostics = {
+                globals = { "vim" },
+              },
+              completion = {
+                callSnippet = "Replace",
               },
             },
-          })
-        end,
-      })
+          },
+        })
+      end
+
+      -- Optional: Configure additional servers that might be installed
+      if lspconfig["svelte"] then
+        lspconfig["svelte"].setup({
+          capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePost", {
+              pattern = { "*.js", "*.ts" },
+              callback = function(ctx)
+                -- Here use ctx.match instead of ctx.file
+                client.notify("$/onDidChangeTsOrJsFile", { uri = vim.uri_from_fname(ctx.match) })
+              end,
+            })
+          end,
+        })
+      end
+
+      if lspconfig["graphql"] then
+        lspconfig["graphql"].setup({
+          capabilities = capabilities,
+          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+        })
+      end
+
     end,
   }
   

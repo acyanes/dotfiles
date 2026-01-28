@@ -2,7 +2,6 @@ return {
     "williamboman/mason.nvim",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig", 
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
@@ -39,6 +38,8 @@ return {
           "emmet_ls",
           "pyright",
         },
+        -- Disable automatic server enabling (we configure manually in lspconfig.lua)
+        automatic_enable = false,
       })
   
       mason_tool_installer.setup({
